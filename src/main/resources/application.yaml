@@ -1,0 +1,20 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: trip-management
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/trip_management_db
+    username: postgres
+    password: 123
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+    show-sql: true
