@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "6933fa3a-5bb2-450f-be26-dddaf6eec39f",
+		"name": "Trip Management API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "9436090",
+		"_collection_link": "https://lunar-eclipse-761053.postman.co/workspace/Team-Workspace~4c33cdca-8dd6-4d97-8e73-f93f4cc8a9a3/collection/9436090-6933fa3a-5bb2-450f-be26-dddaf6eec39f?action=share&source=collection_link&creator=9436090"
+	},
+	"item": [
+		{
+			"name": "Creating trips",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pickupDistrictId\":2,\r\n    \"pickUpAddress\":\"Karimpur\",\r\n    \"dropOffDistrictId\":3,\r\n    \"dropOffAddress\":\"Rahimpur\",\r\n    \"startDate\":\"2024-11-02T06:30:40\",\r\n    \"endDate\": \"2024-11-05T06:30:40\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/api/v1/tms/tripInfo/create"
+			},
+			"response": [
+				{
+					"name": "Creating trips Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pickupDistrictId\":2,\r\n    \"pickUpAddress\":\"Karimpur\",\r\n    \"dropOffDistrictId\":3,\r\n    \"dropOffAddress\":\"Rahimpur\",\r\n    \"startDate\":\"2024-11-02T06:30:40\",\r\n    \"endDate\": \"2024-11-05T06:30:40\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8085/api/v1/tms/tripInfo/create"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 23 Nov 2024 18:03:17 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"TRIP-1732384997\",\n    \"pickupDistrictId\": 2,\n    \"pickupDistrictName\": \"Chotrogram\",\n    \"pickUpAddress\": \"Karimpur\",\n    \"dropOffDistrictId\": 3,\n    \"dropOffDistrictName\": \"Gazipur\",\n    \"dropOffAddress\": \"Rahimpur\",\n    \"currentStatus\": \"CREATED\",\n    \"startDate\": 1730529040000,\n    \"endDate\": 1730788240000,\n    \"realTimeLocation\": null,\n    \"assignedTransport\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Updating trip status",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tripCode\":\"TRIP-1732450947\",\r\n    \"currentStatus\":\"RUNNING\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/api/v1/tms/tripInfo/update"
+			},
+			"response": [
+				{
+					"name": "Updating trip status",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tripCode\":\"TRIP-1732384997\",\r\n    \"currentStatus\":\"BOOKED\",\r\n    \"transportId\":0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8085/api/v1/tms/tripInfo/update"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Nov 2024 05:34:54 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"tripCode\": \"TRIP-1732384997\",\n    \"tripStatus\": \"Booked\",\n    \"assignedTransportId\": 0,\n    \"message\": \"Update Successfully\",\n    \"errorCode\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "getTripDetails",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8085/api/v1/tms/tripInfo/get?tripCode=TRIP-1732384997",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"v1",
+						"tms",
+						"tripInfo",
+						"get"
+					],
+					"query": [
+						{
+							"key": "tripCode",
+							"value": "TRIP-1732384997"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "getTripDetailsResponse",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/v1/tms/tripInfo/get?tripCode=TRIP-1732384997",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"tms",
+								"tripInfo",
+								"get"
+							],
+							"query": [
+								{
+									"key": "tripCode",
+									"value": "TRIP-1732384997"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Nov 2024 05:41:43 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"TRIP-1732384997\",\n    \"pickupDistrictId\": 2,\n    \"pickupDistrictName\": \"Chotrogram\",\n    \"pickUpAddress\": \"Karimpur\",\n    \"dropOffDistrictId\": 3,\n    \"dropOffDistrictName\": \"Gazipur\",\n    \"dropOffAddress\": \"Rahimpur\",\n    \"currentStatus\": \"BOOKED\",\n    \"startDate\": 1730529040000,\n    \"endDate\": 1730788240000,\n    \"realTimeLocation\": null,\n    \"assignedTransport\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "Assigned Transporter",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tripCode\":\"TRIP-1732450947\",   \r\n    \"transportId\":12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/api/v1/tms/tripInfo/update"
+			},
+			"response": [
+				{
+					"name": "Assigned Transporter",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tripCode\":\"TRIP-1732384997\",   \r\n    \"transportId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8085/api/v1/tms/tripInfo/update"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Nov 2024 05:59:15 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"tripCode\": \"TRIP-1732384997\",\n    \"tripStatus\": \"Booked\",\n    \"assignedTransportId\": 1,\n    \"message\": \"Update Successfully\",\n    \"errorCode\": null\n}"
+				}
+			]
+		}
+	]
+}

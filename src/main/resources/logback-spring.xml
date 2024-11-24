@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOGS" value="C:/Users/User/Desktop/logs" />
+    <property name="LOGS" value="/logsData" />
 
     <!-- Get the property for app name from the properties file -->
     <springProperty scope="context" name="appName" source="spring.application.name"/>

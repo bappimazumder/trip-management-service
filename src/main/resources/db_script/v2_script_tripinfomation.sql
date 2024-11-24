@@ -1,4 +1,4 @@
--- DISTRICT ID Sequence creation
+-- Trip Information ID Sequence Creation
 CREATE SEQUENCE IF NOT EXISTS trip_information_id_seq
     INCREMENT 1
     START 1
@@ -11,14 +11,14 @@ CREATE TABLE IF NOT EXISTS trip_information
 (
     id bigint NOT NULL DEFAULT nextval('trip_information_id_seq'::regclass),
     assigned_transport bigint,
-    code character varying(255) COLLATE pg_catalog."default",
+    code character varying(255) NOT NULL,
     created_by bigint,
     create_date timestamp(6) without time zone,
-    current_status character varying(255) COLLATE pg_catalog."default",
-    drop_off_address character varying(255) COLLATE pg_catalog."default",
+    current_status character varying(255) ,
+    drop_off_address character varying(255) ,
     end_date timestamp(6) without time zone,
-    pickup_address character varying(255) COLLATE pg_catalog."default",
-    real_time_location character varying(255) COLLATE pg_catalog."default",
+    pickup_address character varying(255) ,
+    real_time_location character varying(255),
     start_date timestamp(6) without time zone,
     updated_by bigint,
     update_date timestamp(6) without time zone,
