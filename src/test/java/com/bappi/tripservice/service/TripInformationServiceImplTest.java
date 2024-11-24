@@ -68,9 +68,9 @@ public class TripInformationServiceImplTest {
         TripInfoResponseDto response = tripInformationService.save(requestDto);
 
         assertEquals("Successfully Created", response.getResponseMessage());
-        verify(districtInfoRepository).findById(1);  // Verify that the mock was called for pickup district
-        verify(districtInfoRepository).findById(2);  // Verify that the mock was called for drop-off district
-        verify(repository).save(any(TripInformation.class));  // Verify that save was called
+        verify(districtInfoRepository).findById(1);
+        verify(districtInfoRepository).findById(2);
+        verify(repository).save(any(TripInformation.class));
     }
 
 
