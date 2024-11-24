@@ -30,27 +30,27 @@ public class TripInformationController {
     }
 
     @PostMapping(value = ApiPath.API_CREATE_TRIP_INFO)
-    public ResponseEntity<TripInfoResponseDto> create(@RequestBody TripInfoRequestDto requestDto){
+    public ResponseEntity<TripInfoResponseDto> create(@RequestBody TripInfoRequestDto requestDto) {
         log.info("Create Trip Info {} ", requestDto.toString());
         ServiceExceptionHandler<TripInfoResponseDto> dataHandler = () -> service.save(requestDto);
         return new ResponseEntity<>(dataHandler.executeHandler(), HttpStatus.OK);
     }
 
     @PutMapping(value = ApiPath.API_UPDATE_TRIP)
-    public ResponseEntity<TripUpdateResponseDto> update(@RequestBody TripUpdateRequestDto requestDto){
+    public ResponseEntity<TripUpdateResponseDto> update(@RequestBody TripUpdateRequestDto requestDto) {
         log.info("Update Trip Info {} ", requestDto.toString());
         ServiceExceptionHandler<TripUpdateResponseDto> dataHandler = () -> service.update(requestDto);
         return new ResponseEntity<>(dataHandler.executeHandler(), HttpStatus.OK);
     }
 
     @GetMapping(value = ApiPath.API_GET_TRIP)
-    public ResponseEntity<TripInfoResponseDto> getDetails(@RequestParam(value = "tripCode") String tripCode){
+    public ResponseEntity<TripInfoResponseDto> getDetails(@RequestParam(value = "tripCode") String tripCode) {
 
-        if(tripCode.equals("null") || tripCode.isEmpty()){
+        if (tripCode.equals("null") || tripCode.isEmpty()) {
             log.error("Get Trip details , trip code is null");
-            throw new CustomException(APIErrorCode.INVALID_REQUEST,HttpStatus.BAD_REQUEST);
+            throw new CustomException(APIErrorCode.INVALID_REQUEST, HttpStatus.BAD_REQUEST);
         }
-        TripInfoResponseDto dto =  service.getTrip(tripCode);
+        TripInfoResponseDto dto = service.getTrip(tripCode);
         log.info("Trip details to return: " + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

@@ -15,6 +15,7 @@ public class TripInfoRequestDto {
 
     private Integer pickupDistrictId;
 
+
     private String pickUpAddress;
 
     private Integer dropOffDistrictId;

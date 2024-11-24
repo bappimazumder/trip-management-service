@@ -42,19 +42,37 @@ public class TripInformationServiceImpl implements TripInformationService {
 
     @Override
     public TripInfoResponseDto save(TripInfoRequestDto requestDto) {
+        TripInfoResponseDto responseDto = new TripInfoResponseDto();
 
         Optional<DistrictInfo> pickUpDistrict = districtInfoRepository.findById(requestDto.getPickupDistrictId());
         Optional<DistrictInfo> dropOffDistrict = districtInfoRepository.findById(requestDto.getDropOffDistrictId());
 
         if (pickUpDistrict.isEmpty()){
             log.error("Invalid pickup district Found");
-            throw new CustomException(APIErrorCode.INVALID_REQUEST, HttpStatus.BAD_REQUEST);
+            responseDto.setResponseMessage("Invalid Pickup District");
+            responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
+            return responseDto;
         }
 
         if (dropOffDistrict.isEmpty()){
             log.error("Invalid drop off district Found");
-            throw new CustomException(APIErrorCode.INVALID_REQUEST, HttpStatus.BAD_REQUEST);
+            responseDto.setResponseMessage("Invalid Drop-off District");
+            responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
+            return responseDto;
         }
+
+        if(requestDto.getPickUpAddress() == null || requestDto.getPickUpAddress().isEmpty()){
+            responseDto.setResponseMessage("Invalid Pickup Address");
+            responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
+            return responseDto;
+        }
+
+        if(requestDto.getDropOffAddress() == null || requestDto.getDropOffAddress().isEmpty()){
+            responseDto.setResponseMessage("Invalid Drop off Address");
+            responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
+            return responseDto;
+        }
+
         int uniqueId = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
         String tripCode = TRIP_CODE_PREFIX + uniqueId;
 
@@ -65,8 +83,9 @@ public class TripInformationServiceImpl implements TripInformationService {
         tripInformation.setCreateBy(1L);
         tripInformation.setPickupDistrict(pickUpDistrict.get());
         tripInformation.setDropOffDistrict(dropOffDistrict.get());
-
-        return objectMapper.map(repository.save(tripInformation));
+        responseDto = objectMapper.map(repository.save(tripInformation));
+        responseDto.setResponseMessage("Successfully Created");
+        return responseDto;
     }
 
     @Override
@@ -81,7 +100,15 @@ public class TripInformationServiceImpl implements TripInformationService {
         }
 
         if(requestDto.getCurrentStatus() != null){
-            tripInformation.setCurrentStatus(TripStatus.valueOf(requestDto.getCurrentStatus()));
+            if(TripStatus.isValidTripStatus(requestDto.getCurrentStatus())){
+                tripInformation.setCurrentStatus(TripStatus.valueOf(requestDto.getCurrentStatus()));
+            }else{
+                log.error("Invalid Trip Status {} ",requestDto.getCurrentStatus());
+                TripUpdateResponseDto responseDto = new TripUpdateResponseDto();
+                responseDto.setResponseMessage("Invalid Trip Status");
+                responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
+                return responseDto;
+            }
         }
 
         if(requestDto.getTransportId() != null){
@@ -97,7 +124,7 @@ public class TripInformationServiceImpl implements TripInformationService {
                                             .tripCode(savedObj.getCode())
                                             .tripStatus(TripStatus.valueOf(savedObj.getCurrentStatus().name()).getMessage())
                                             .assignedTransportId(savedObj.getAssignedTransport())
-                                            .message("Update Successfully").build();
+                                            .responseMessage("Update Successfully").build();
     }
 
     @Override

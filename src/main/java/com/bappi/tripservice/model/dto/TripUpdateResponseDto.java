@@ -1,5 +1,6 @@
 package com.bappi.tripservice.model.dto;
 
+import com.bappi.tripservice.config.IAPIErrorCode;
 import lombok.*;
 
 @Builder
@@ -10,8 +11,12 @@ import lombok.*;
 public class TripUpdateResponseDto {
 
     String tripCode;
+
     String tripStatus;
+
     Long assignedTransportId;
-    String message;
-    String errorCode;
+
+    private String responseMessage;
+
+    private IAPIErrorCode errorCode;
 }

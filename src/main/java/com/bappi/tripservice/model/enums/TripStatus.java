@@ -12,7 +12,8 @@ public enum TripStatus {
     CREATED("Created"),
     BOOKED("Booked"),
     RUNNING("Running"),
-    COMPLETED("Completed");
+    COMPLETED("Completed"),
+    CANCELLED("Cancelled)");
 
     @Getter
     private final String message;
@@ -28,6 +29,15 @@ public enum TripStatus {
             if(!tripStatusMap.containsKey(tripStatus.getMessage().toLowerCase())) {
                 tripStatusMap.put(tripStatus.getMessage().toLowerCase(), tripStatus);
             }
+        }
+    }
+
+    public static boolean isValidTripStatus(String value) {
+        try {
+            TripStatus status = TripStatus.valueOf(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
         }
     }
 }

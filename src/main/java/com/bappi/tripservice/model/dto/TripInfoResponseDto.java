@@ -1,5 +1,6 @@
 package com.bappi.tripservice.model.dto;
 
+import com.bappi.tripservice.config.IAPIErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +37,8 @@ public class TripInfoResponseDto {
 
     private Long assignedTransport;
 
+    private String responseMessage;
+
+    private IAPIErrorCode errorCode;
 
 }
