@@ -122,7 +122,7 @@ public class TripInformationServiceImpl implements TripInformationService {
 
         return TripUpdateResponseDto.builder()
                                             .tripCode(savedObj.getCode())
-                                            .tripStatus(TripStatus.valueOf(savedObj.getCurrentStatus().name()).getMessage())
+                                            .tripStatus(savedObj.getCurrentStatus().name())
                                             .assignedTransportId(savedObj.getAssignedTransport())
                                             .responseMessage("Update Successfully").build();
     }

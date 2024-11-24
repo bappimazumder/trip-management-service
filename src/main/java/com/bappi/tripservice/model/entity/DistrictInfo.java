@@ -31,13 +31,13 @@ public class DistrictInfo {
     @Column(name = DistrictDBConstant.NAME_BN)
     private String nameBn;
 
-    @Column(name = DistrictDBConstant.ADDRESS)
+   @Column(name = DistrictDBConstant.ADDRESS)
     private String address;
 
     @Column(name = DistrictDBConstant.ACTIVE_STATUS)
     private Boolean activeStatus;
 
-    @Column(name = DistrictDBConstant.CREATED_DATE)
+   @Column(name = DistrictDBConstant.CREATED_DATE)
     private Date createdDate;
 
     @Column(name = DistrictDBConstant.CREATED_BY)
