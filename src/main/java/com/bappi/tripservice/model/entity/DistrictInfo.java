@@ -20,7 +20,7 @@ public class DistrictInfo {
     @Id
     @Column(name = DistrictDBConstant.ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = DistrictDBConstant.CODE, unique = true)
     private String code;

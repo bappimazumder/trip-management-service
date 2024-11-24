@@ -28,14 +28,14 @@ public class TripInformation {
     @Column(name = CODE,unique=true)
     private String code;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = PICKUP_DISTRICT)
     private DistrictInfo pickupDistrict;
 
     @Column(name = PICKUP_ADDRESS)
     private String pickUpAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = DROP_OFF_DISTRICT)
     private DistrictInfo dropOffDistrict;
 
@@ -59,13 +59,13 @@ public class TripInformation {
     private Timestamp endDate;
 
     @Column(name = CREATE_DATE)
-    private Timestamp createDate;
+    private Timestamp createDate = new Timestamp(System.currentTimeMillis());
 
     @Column(name = CREATED_BY)
     private Long createBy;
 
     @Column(name = UPDATE_DATE)
-    private Timestamp updateDate;
+    private Timestamp updateDate = new Timestamp(System.currentTimeMillis());
 
     @Column(name = UPDATED_BY)
     private Long updateBy;

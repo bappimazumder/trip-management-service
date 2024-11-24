@@ -5,10 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 public class TripUpdateRequestDto {
+
+    private String tripCode;
+
+    private String currentStatus;
+
+    private Long transportId;
+
 
 }
