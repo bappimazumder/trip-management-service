@@ -50,55 +50,73 @@ Example API Request and Response Format
 
    Description: Creates a new trip with the provided details.
 
-Request:
+    Request:
 
-URL: POST /api/v1/tms/tripInfo/create
+    URL: POST /api/v1/tms/tripInfo/create
 
+    Headers:
+
+        Content-Type: application/json
+        Authorization: No Auth
+
+    Body:
+    
+        {
+            "pickupDistrictId":3,
+            "pickUpAddress":"Karimpur",
+            "dropOffDistrictId":1,
+            "dropOffAddress":"Rahimpur",
+            "startDate":"2024-11-02T06:30:40",
+            "endDate": "2024-11-05T06:30:40"
+        }
+
+
+   Response:
+
+       {
+       "code": "TRIP-1732500249",
+       "pickupDistrictId": 3,
+       "pickupDistrictName": "Gazipur",
+       "pickUpAddress": "Karimpur",
+       "dropOffDistrictId": 1,
+       "dropOffDistrictName": "Dhaka",
+       "dropOffAddress": "Rahimpur",
+       "currentStatus": "CREATED",
+       "startDate": 1730529040000,
+       "endDate": 1730788240000,
+       "realTimeLocation": null,
+       "assignedTransport": null,
+       "createBy": 1,
+       "createDate": 1732500249958,
+       "responseMessage": "Successfully Created",
+       "errorCode": null
+       }
+   HTTP Status Code: 201 Created (when the trip is successfully created)
+    
 Headers:
-
-    Content-Type: application/json
-    Authorization: No Auth
-
+    
+        Content-Type: application/json
+    
 Body:
-
-	{
-        "pickupDistrictId":3,
-        "pickUpAddress":"Karimpur",
-        "dropOffDistrictId":1,
-        "dropOffAddress":"Rahimpur",
-        "startDate":"2024-11-02T06:30:40",
-        "endDate": "2024-11-05T06:30:40"
-    }
-
-
-Response:
-
-HTTP Status Code: 201 Created (when the trip is successfully created)
-
-Headers:
-
-	Content-Type: application/json
-
-Body:
-
-    {
-        "code": "TRIP-1732500249",
-        "pickupDistrictId": 3,
-        "pickupDistrictName": "Gazipur",
-        "pickUpAddress": "Karimpur",
-        "dropOffDistrictId": 1,
-        "dropOffDistrictName": "Dhaka",
-        "dropOffAddress": "Rahimpur",
-        "currentStatus": "CREATED",
-        "startDate": 1730529040000,
-        "endDate": 1730788240000,
-        "realTimeLocation": null,
-        "assignedTransport": null,
-        "createBy": 1,
-        "createDate": 1732500249958,
-        "responseMessage": "Successfully Created",
-        "errorCode": null
-    }
+    
+        {
+            "code": "TRIP-1732500249",
+            "pickupDistrictId": 3,
+            "pickupDistrictName": "Gazipur",
+            "pickUpAddress": "Karimpur",
+            "dropOffDistrictId": 1,
+            "dropOffDistrictName": "Dhaka",
+            "dropOffAddress": "Rahimpur",
+            "currentStatus": "CREATED",
+            "startDate": 1730529040000,
+            "endDate": 1730788240000,
+            "realTimeLocation": null,
+            "assignedTransport": null,
+            "createBy": 1,
+            "createDate": 1732500249958,
+            "responseMessage": "Successfully Created",
+            "errorCode": null
+        }
 
 
 2. PUT Request Example: Update Trip Status
