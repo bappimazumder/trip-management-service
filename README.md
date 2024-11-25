@@ -72,25 +72,7 @@ Example API Request and Response Format
 
 
    Response:
-
-       {
-       "code": "TRIP-1732500249",
-       "pickupDistrictId": 3,
-       "pickupDistrictName": "Gazipur",
-       "pickUpAddress": "Karimpur",
-       "dropOffDistrictId": 1,
-       "dropOffDistrictName": "Dhaka",
-       "dropOffAddress": "Rahimpur",
-       "currentStatus": "CREATED",
-       "startDate": 1730529040000,
-       "endDate": 1730788240000,
-       "realTimeLocation": null,
-       "assignedTransport": null,
-       "createBy": 1,
-       "createDate": 1732500249958,
-       "responseMessage": "Successfully Created",
-       "errorCode": null
-       }
+       
    HTTP Status Code: 201 Created (when the trip is successfully created)
     
 Headers:
