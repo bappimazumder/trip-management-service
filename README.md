@@ -111,6 +111,7 @@ Body:
 
     Request:
     URL: PUT /api/v1/tms/tripInfo/update
+
     Headers:
 
         Content-Type: application/json
@@ -167,7 +168,8 @@ Body:
    Description: Add transporter to an existing trip using the trip code.
 
    Request:
-   URL: PUT /api/v1/tms/tripInfo/update
+   URL:  PUT  /api/v1/tms/tripInfo/update
+
    Headers:
 
         Content-Type: application/json
@@ -215,13 +217,17 @@ Body:
            }
 
 4. GET Request Example: Retrieve Trip Information by Code
+
    HTTP Method: GET
+
    Endpoint: /api/v1/tms/tripInfo/get?tripCode=TRIP-1732384997
+
    Description: Fetches details of a trip using a unique trip code.
 
     Request:
     
     URL: GET /api/v1/tms/tripInfo/get?tripCode=TRIP-1732384997
+
     Headers:    
 
        Content-Type: application/json
@@ -249,6 +255,7 @@ Body:
     If the trip code is invalid:
 
     URL: GET /api/v1/tms/tripInfo/get?tripCode=TRIP-001
+
     Headers:
     
         Content-Type: application/json
