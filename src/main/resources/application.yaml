@@ -7,7 +7,7 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/trip_management_db
-    username: tms_user
+    username: postgres
     password: 123
   jpa:
     hibernate:
@@ -17,4 +17,4 @@ spring:
       hibernate:
         format_sql: true
         generate_statistics: false
-    show-sql: true
+    show-sql: false

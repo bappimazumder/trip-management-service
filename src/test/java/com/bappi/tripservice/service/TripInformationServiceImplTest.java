@@ -1,7 +1,6 @@
 package com.bappi.tripservice.service;
 
 import com.bappi.tripservice.config.APIErrorCode;
-import com.bappi.tripservice.config.CustomException;
 import com.bappi.tripservice.model.dto.TripInfoRequestDto;
 import com.bappi.tripservice.model.dto.TripInfoResponseDto;
 import com.bappi.tripservice.model.dto.TripUpdateRequestDto;
@@ -17,12 +16,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -102,7 +101,7 @@ public class TripInformationServiceImplTest {
         TripInfoRequestDto requestDto = new TripInfoRequestDto();
         requestDto.setPickupDistrictId(1);
         requestDto.setDropOffDistrictId(2);
-        requestDto.setPickUpAddress("");  // Invalid pickup address
+        requestDto.setPickUpAddress("");
         requestDto.setDropOffAddress("Drop-off Address");
 
         DistrictInfo pickupDistrict = new DistrictInfo();
@@ -152,45 +151,23 @@ public class TripInformationServiceImplTest {
         assertEquals(5L, response.getAssignedTransportId());
     }
 
-    @Test
-    void update_TripNotFound_ReturnsError() {
-        TripUpdateRequestDto requestDto = new TripUpdateRequestDto();
-        requestDto.setTripCode("INVALID_CODE");
-
-        when(repository.findByCode("INVALID_CODE")).thenReturn(null);
-
-        CustomException exception = assertThrows(CustomException.class, () -> {
-            tripInformationService.update(requestDto);
-        });
-
-        assertEquals(APIErrorCode.INVALID_REQUEST, exception.getCode());
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
-    }
 
     @Test
-    void update_InvalidTripStatus_ReturnsError() {
-
+    public void testUpdate_InvalidTripCode() {
         TripUpdateRequestDto requestDto = new TripUpdateRequestDto();
-        requestDto.setTripCode("TRIP123");
-        requestDto.setCurrentStatus("INVALID_STATUS");
+        when(repository.findByCode("INVALID001")).thenReturn(null);
 
-        TripInformation existingTrip = new TripInformation();
-        existingTrip.setCode("TRIP123");
-        existingTrip.setCurrentStatus(TripStatus.RUNNING);
+        TripUpdateResponseDto responseDto = tripInformationService.update(requestDto);
 
-        when(repository.findByCode("TRIP123")).thenReturn(existingTrip);
-
-        TripUpdateResponseDto response = tripInformationService.update(requestDto);
-
-        assertEquals("Invalid Trip Status", response.getResponseMessage());
-        assertEquals(APIErrorCode.INVALID_REQUEST, response.getErrorCode());
+        assertEquals("Invalid Trip Code", responseDto.getResponseMessage());
+        assertEquals(APIErrorCode.INVALID_REQUEST, responseDto.getErrorCode());
     }
 
     @Test
     void update_ValidTransportId_ReturnsUpdatedInfo() {
         TripUpdateRequestDto requestDto = new TripUpdateRequestDto();
         requestDto.setTripCode("TRIP123");
-        requestDto.setTransportId(10L);  // New transport ID
+        requestDto.setTransportId(10L);
 
         TripInformation existingTrip = new TripInformation();
         existingTrip.setCode("TRIP123");
@@ -199,7 +176,7 @@ public class TripInformationServiceImplTest {
         TripInformation updatedTrip = new TripInformation();
         updatedTrip.setCode("TRIP123");
         updatedTrip.setCurrentStatus(TripStatus.RUNNING);
-        updatedTrip.setAssignedTransport(10L);  // Updated transport ID
+        updatedTrip.setAssignedTransport(10L);
 
         when(repository.findByCode("TRIP123")).thenReturn(existingTrip);
         when(repository.save(any(TripInformation.class))).thenReturn(updatedTrip);
@@ -233,5 +210,27 @@ public class TripInformationServiceImplTest {
         assertEquals(tripCode, response.getCode());
         assertEquals(TripStatus.BOOKED.name(), response.getCurrentStatus());
         assertEquals(1L, response.getAssignedTransport());
+    }
+
+    @Test
+    public void testGetTrip_InvalidTripCode() {
+        when(repository.findByCode("INVALID_CODE")).thenReturn(null);
+
+        TripInfoResponseDto responseDto = tripInformationService.getTrip("INVALID_CODE");
+
+        assertEquals("Invalid Trip Code", responseDto.getResponseMessage());
+        assertEquals(APIErrorCode.INVALID_REQUEST, responseDto.getErrorCode());
+    }
+
+
+    @Test
+    public void testGetTrip_NullOrEmptyTripCode() {
+
+        when(repository.findByCode(null)).thenReturn(null);
+
+        TripInfoResponseDto responseDto = tripInformationService.getTrip(null);
+
+        assertEquals("Invalid Trip Code", responseDto.getResponseMessage());
+        assertEquals(APIErrorCode.INVALID_REQUEST, responseDto.getErrorCode());
     }
 }

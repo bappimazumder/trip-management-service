@@ -1,7 +1,6 @@
 package com.bappi.tripservice.service.impl;
 
 import com.bappi.tripservice.config.APIErrorCode;
-import com.bappi.tripservice.config.CustomException;
 import com.bappi.tripservice.model.dto.TripInfoRequestDto;
 import com.bappi.tripservice.model.dto.TripInfoResponseDto;
 import com.bappi.tripservice.model.dto.TripUpdateRequestDto;
@@ -16,7 +15,6 @@ import com.bappi.tripservice.utils.mapper.TripInformationMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -90,13 +88,17 @@ public class TripInformationServiceImpl implements TripInformationService {
 
     @Override
     public TripUpdateResponseDto update(TripUpdateRequestDto requestDto) {
+        TripUpdateResponseDto responseDto = new TripUpdateResponseDto();
         String tripCode = requestDto.getTripCode();
         log.debug("Update Trip Info details by code {} " , tripCode);
 
         TripInformation tripInformation = repository.findByCode(tripCode);
         if(tripInformation == null) {
             log.error("No Trip Information Found");
-            throw new CustomException(APIErrorCode.INVALID_REQUEST, HttpStatus.BAD_REQUEST);
+            responseDto.setResponseMessage("Invalid Trip Code");
+            responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
+            return responseDto;
+           // throw new CustomException(APIErrorCode.INVALID_REQUEST, HttpStatus.BAD_REQUEST);
         }
 
         if(requestDto.getCurrentStatus() != null){
@@ -104,7 +106,6 @@ public class TripInformationServiceImpl implements TripInformationService {
                 tripInformation.setCurrentStatus(TripStatus.valueOf(requestDto.getCurrentStatus()));
             }else{
                 log.error("Invalid Trip Status {} ",requestDto.getCurrentStatus());
-                TripUpdateResponseDto responseDto = new TripUpdateResponseDto();
                 responseDto.setResponseMessage("Invalid Trip Status");
                 responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
                 return responseDto;
@@ -130,11 +131,16 @@ public class TripInformationServiceImpl implements TripInformationService {
     @Override
     public TripInfoResponseDto getTrip(String code) {
         log.debug("Get Trip Info details by code {} " , code);
+        TripInfoResponseDto responseDto = new TripInfoResponseDto();
 
         TripInformation tripInfo = repository.findByCode(code);
+
         if(tripInfo == null){
             log.error("Trip code is invalid");
-            throw new CustomException(APIErrorCode.WRONG_INFORMATION_PROVIDED, HttpStatus.BAD_REQUEST);
+            responseDto.setResponseMessage("Invalid Trip Code");
+            responseDto.setErrorCode(APIErrorCode.INVALID_REQUEST);
+            return responseDto;
+           // throw new CustomException(APIErrorCode.WRONG_INFORMATION_PROVIDED, HttpStatus.BAD_REQUEST);
         }
         return objectMapper.map(tripInfo);
     }

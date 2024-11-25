@@ -37,6 +37,10 @@ public class TripInfoResponseDto {
 
     private Long assignedTransport;
 
+    private Long createBy;
+
+    private Timestamp createDate;
+
     private String responseMessage;
 
     private IAPIErrorCode errorCode;

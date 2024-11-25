@@ -33,7 +33,7 @@ public class TripInformationController {
     public ResponseEntity<TripInfoResponseDto> create(@RequestBody TripInfoRequestDto requestDto) {
         log.info("Create Trip Info {} ", requestDto.toString());
         ServiceExceptionHandler<TripInfoResponseDto> dataHandler = () -> service.save(requestDto);
-        return new ResponseEntity<>(dataHandler.executeHandler(), HttpStatus.OK);
+        return new ResponseEntity<>(dataHandler.executeHandler(), HttpStatus.CREATED);
     }
 
     @PutMapping(value = ApiPath.API_UPDATE_TRIP)
